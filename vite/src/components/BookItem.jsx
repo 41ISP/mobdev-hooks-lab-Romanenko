@@ -1,27 +1,37 @@
-const BookItem = () =>  {
-return (
-<div className="book-row" data-id={1}>
-        <div className="book-cover" style={{ background: "#4f6b52" }}>
-          К
-        </div>
-        <div className="book-info">
-          <p className="book-title done">Клара и Солнце</p>
-        </div>
-        <div className="read-check checked" data-role="toggle">
-          <span className="check-circle">✓</span>
-          <span className="read-label">Прочитано</span>
-        </div>
-        <button
-          className="delete-btn"
-          data-role="delete"
-          title="Убрать с полки"
-        >
-          ✕
-        </button>
+const BookItem = ({ book, onToggleRead, onDelete }) => {
+    const { id, title, read } = book
+    const hash = id.split("").reduce((acc, ch) => acc + ch.charCodeAt(0), 0)
+    const coverColor = `hsl(${hash % 360}, 40%, 45%)`
+  return (
+    <div className="book-row">
+      <div className="book-cover" style={{ background: coverColor }} />
+      
+      
+      <div className="book-info">
+        <p className={"book-title" + (read ? " done" : "")}>{title}</p>
       </div>
-
-
-
-)
+              
+      
+      
+      <div
+        className={"read-check" + (read ? " checked" : "")}
+        role="button"
+        onClick={() => onToggleRead(id)}
+      >
+        <span className="check-circle">{read ? "✓" : ""}</span>
+        <span className="read-label">Прочитано</span>
+      </div>
+      
+      
+      <button
+        className="delete-btn"
+        onClick={() => onDelete(id)}
+        title="Убрать с полки"
+      >
+        ✕
+      </button>
+    </div>
+  )
 }
+
 export default BookItem
